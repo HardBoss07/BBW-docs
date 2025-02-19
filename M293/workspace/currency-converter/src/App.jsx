@@ -43,7 +43,7 @@ function App() {
     return (
         <>
             <div className="header">
-                <h1>Currency Converter</h1>
+                <h1>Currency Converter by Matteo Bosshard</h1>
             </div>
             <div className="main">
                 <input
