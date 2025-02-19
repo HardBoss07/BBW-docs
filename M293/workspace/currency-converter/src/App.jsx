@@ -1,4 +1,10 @@
-import { useState } from 'react';
+/**
+ * App.jsx
+ * @author Matteo Bosshard
+ * @version 19.02.2025
+ */
+
+import {useState} from 'react';
 import './App.css';
 
 function App() {
@@ -44,6 +50,7 @@ function App() {
         <>
             <div className="header">
                 <h1>Currency Converter by Matteo Bosshard</h1>
+                <img src="../public/img.png" alt="currency image"/>
             </div>
             <div className="main">
                 <input
