@@ -5,3 +5,5 @@ Nochmals eine React App erstellen names Currency Converter erstellen
 Simplen Currency Converter in Vite + React erstellt
 Styling angepasst vom Currency Converter
 
+## 05.03.2025
+Currency Converter in eigene Komponente entwickelt

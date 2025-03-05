@@ -72,7 +72,6 @@ function App() {
             <div className="result">
                 <ButtonComponent text={"Convert CHF to Selected Currencies"} onClick={convert} />
                 <ButtonComponent text={"Clear"} onClick={clear} />
-
                 <ResultDisplay result={result} />
             </div>
         </>
