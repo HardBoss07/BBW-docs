@@ -1,11 +1,14 @@
 /**
  * App.jsx
  * @author Matteo Bosshard
- * @version 19.02.2025
+ * @version 05.03.2025
  */
-
-import {useState} from 'react';
+import { useState } from 'react';
 import './App.css';
+import Header from "./components/HeaderComponent.jsx";
+import CurrencyCheckbox from "./components/CurrencyCheckboxComponent.jsx";
+import ResultDisplay from "./components/ResultDisplayComponent.jsx";
+import CurrencyInput from "./components/CurrencyInputComponent.jsx";
 
 function App() {
     const [chf, setCHF] = useState('');
@@ -19,13 +22,13 @@ function App() {
     const exchangeRates = {
         usd: 1.11,
         eur: 1.06,
-        jpy: 168.04
+        jpy: 168.04,
     };
 
     const handleCheckboxChange = (currency) => {
-        setChecked(prevState => ({
+        setChecked((prevState) => ({
             ...prevState,
-            [currency]: !prevState[currency]
+            [currency]: !prevState[currency],
         }));
     };
 
@@ -38,7 +41,7 @@ function App() {
         let conversions = [];
         Object.keys(checked).forEach((currency) => {
             if (checked[currency]) {
-                let convertedValue = (parseFloat(chf) * exchangeRates[currency]).toFixed(2);
+                const convertedValue = (parseFloat(chf) * exchangeRates[currency]).toFixed(2);
                 conversions.push(`${chf} CHF is converted to ${convertedValue} ${currency.toUpperCase()}`);
             }
         });
@@ -46,52 +49,33 @@ function App() {
         setResult(conversions.length > 0 ? conversions.join('\n') : 'No currency selected.');
     };
 
+    const clear = () => {
+        setCHF('');
+        setChecked({
+            usd: false,
+            eur: false,
+            jpy: false,
+        });
+        setResult('');
+    };
+
     return (
         <>
-            <div className="header">
-                <h1>Currency Converter by Matteo Bosshard</h1>
-                <img src="../public/img.png" alt="currency image"/>
-            </div>
+            <Header />
             <div className="main">
-                <input
-                    type="number"
-                    value={chf}
-                    onChange={(e) => setCHF(e.target.value)}
-                    placeholder="Enter CHF amount"
-                />
-                <br/>
-                <label className="checkbox">
-                    <input
-                        type="checkbox"
-                        checked={checked.usd}
-                        onChange={() => handleCheckboxChange('usd')}
-                    />
-                    Convert to USD
-                </label>
-                <label className="checkbox">
-                    <input
-                        type="checkbox"
-                        checked={checked.eur}
-                        onChange={() => handleCheckboxChange('eur')}
-                    />
-                    Convert to EUR
-                </label>
-                <label className="checkbox">
-                    <input
-                        type="checkbox"
-                        checked={checked.jpy}
-                        onChange={() => handleCheckboxChange('jpy')}
-                    />
-                    Convert to JPY
-                </label>
+                <CurrencyInput value={chf} onChange={(e) => setCHF(e.target.value)} />
+                <CurrencyCheckbox currency="usd" checked={checked.usd} onChange={handleCheckboxChange} />
+                <CurrencyCheckbox currency="eur" checked={checked.eur} onChange={handleCheckboxChange} />
+                <CurrencyCheckbox currency="jpy" checked={checked.jpy} onChange={handleCheckboxChange} />
             </div>
             <div className="result">
                 <button className="button" onClick={convert}>
                     Convert CHF to Selected Currencies
                 </button>
-
-                <h2>Conversions</h2>
-                <pre>{result}</pre>
+                <button className="button" onClick={clear}>
+                    Clear
+                </button>
+                <ResultDisplay result={result} />
             </div>
         </>
     );
