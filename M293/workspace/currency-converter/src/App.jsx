@@ -9,6 +9,7 @@ import Header from "./components/HeaderComponent.jsx";
 import CurrencyCheckbox from "./components/CurrencyCheckboxComponent.jsx";
 import ResultDisplay from "./components/ResultDisplayComponent.jsx";
 import CurrencyInput from "./components/CurrencyInputComponent.jsx";
+import ButtonComponent from "./components/ButtonComponent.jsx";
 
 function App() {
     const [chf, setCHF] = useState('');
@@ -69,12 +70,9 @@ function App() {
                 <CurrencyCheckbox currency="jpy" checked={checked.jpy} onChange={handleCheckboxChange} />
             </div>
             <div className="result">
-                <button className="button" onClick={convert}>
-                    Convert CHF to Selected Currencies
-                </button>
-                <button className="button" onClick={clear}>
-                    Clear
-                </button>
+                <ButtonComponent text={"Convert CHF to Selected Currencies"} onClick={convert} />
+                <ButtonComponent text={"Clear"} onClick={clear} />
+
                 <ResultDisplay result={result} />
             </div>
         </>
