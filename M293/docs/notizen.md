@@ -1,9 +1,5 @@
-# Notizen
+# Notizen zu Modul 293
 
-## 19.02.2025
-Nochmals eine React App erstellen names Currency Converter erstellen
-Simplen Currency Converter in Vite + React erstellt
-Styling angepasst vom Currency Converter
-
-## 05.03.2025
-Currency Converter in eigene Komponente entwickelt
+## Lektionen
+- [Lektion von 19.02.2025](/M293/docs/19-02-2025/page.md)
+- [Lektion von 05.03.2025](/M293/docs/05-03-2025/page.md)
