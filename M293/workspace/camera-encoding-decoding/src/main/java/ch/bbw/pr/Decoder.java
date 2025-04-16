@@ -11,13 +11,8 @@ public class Decoder {
       if (barcode == null || !validate(barcode)) {
          return "INVALID BARCODE";
       }
-      String[] splitted = barcode.split("-");
-      String result = "";
-      for (String s : splitted) {
-         result += s + "\n";
-      }
 
-      return result;
+      return Formatter.format(barcode);
    }
 
    static public boolean validate(String barcode) {

@@ -5,13 +5,15 @@ import RadioGroup from "./components/RadioGroup.jsx";
 import './App.css'
 
 function App() {
-  const [formData, setFormData] = useState({
-      nachname: '',
-      vorname: '',
-      datum: '',
-      beruf: '',
-      geschlecht: '',
-  });
+    const [formData, setFormData] = useState({
+        nachname: '',
+        vorname: '',
+        datum: '',
+        beruf: '',
+        geschlecht: '',
+    });
+
+    const [webhookResponse, setWebhookResponse] = useState(null);
 
     const handleChange = (e) => {
         const { name, value } = e.target
@@ -28,13 +30,11 @@ function App() {
                 body: JSON.stringify(formData),
             })
 
-            if (response.ok) {
-                alert('Formular erfolgreich gesendet!')
-            } else {
-                alert('Fehler beim Senden.')
-            }
+            const data = await response.text();
+            setWebhookResponse(data);
+
         } catch (error) {
-            alert('Netzwerkfehler: ' + error.message)
+            setWebhookResponse('Netzwerkfehler: ' + error.message);
         }
     }
 
@@ -87,6 +87,13 @@ function App() {
 
                 <button type="submit">Absenden</button>
             </form>
+
+            {webhookResponse && (
+                <div className="response-window">
+                    <h2>Antwort vom Server:</h2>
+                    <pre>{webhookResponse}</pre>
+                </div>
+            )}
         </div>
     );
 }

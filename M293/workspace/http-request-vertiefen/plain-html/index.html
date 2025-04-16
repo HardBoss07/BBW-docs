@@ -1,0 +1,32 @@
+<!DOCTYPE html>
+<html lang="de">
+<head>
+    <meta charset="UTF-8"/>
+    <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+    <title>Formular</title>
+</head>
+<body>
+<h1>Formular</h1>
+<form action="https://webhook.site/158370c6-4ace-40c0-aa88-d701adcfd9df" method="GET">
+    <label>Nachname:<input type="text" name="nachname" required/></label>
+    <label>Vorname:<input type="text" name="vorname" required/></label>
+    <label>Datum:<input type="date" name="datum" required/></label>
+    <div class="radio-group">
+        <p>Berufswahl:</p>
+        <label><input type="radio" name="beruf" value="ApplikationsentwicklerIn" required/> ApplikationsentwicklerIn</label><br/>
+        <label><input type="radio" name="beruf" value="PlattformentwicklerIn"/> PlattformentwicklerIn</label><br/>
+        <label><input type="radio" name="beruf" value="EntwicklerIn Digital Business"/> EntwicklerIn Digital
+            Business</label>
+    </div>
+    <label>Geschlecht:
+        <select name="geschlecht" required>
+            <option value="">Bitte wählen</option>
+            <option value="Männlich">Männlich</option>
+            <option value="Weiblich">Weiblich</option>
+            <option value="Divers">Divers</option>
+        </select>
+    </label>
+    <button type="submit">Absenden</button>
+</form>
+</body>
+</html>
