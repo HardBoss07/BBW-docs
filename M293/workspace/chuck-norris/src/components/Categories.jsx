@@ -33,8 +33,8 @@ export default function Categories() {
 
     return (
         <div>
-            <h1>Chuck Norris Jokes</h1>
-            <div>
+            <h1>Chuck Norris Jokes By Category</h1>
+            <div className="buttons">
                 {buttons.map((item) => {
                     return (
                         <button
