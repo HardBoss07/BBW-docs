@@ -8,3 +8,4 @@
 - [Lektion von 02-04-2025](/docs/02-04-2025/page.md)
 - [Lektion von 09-04-2025](/docs/09-04-2025/page.md)
 - [Lektion von 16-04-2025](/docs/16-04-2025/page.md)
+- [Lektion von 07-05-2025](/docs/07-05-2025/page.md)
