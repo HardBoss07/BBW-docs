@@ -1,90 +1,131 @@
-"use client"; // Only needed in `app/` router
+"use client"; // for app/ directory (remove if using pages/)
 
 import { useState } from "react";
+import {
+  DndContext,
+  closestCenter,
+  useDraggable,
+  useDroppable,
+} from "@dnd-kit/core";
 import { Card, CardContent } from "@/components/ui/card";
 import { Input } from "@/components/ui/input";
 import { Textarea } from "@/components/ui/textarea";
 import { Button } from "@/components/ui/button";
-import {
-  Select,
-  SelectTrigger,
-  SelectValue,
-  SelectContent,
-  SelectItem,
-} from "@/components/ui/select";
+import { v4 as uuidv4 } from "uuid";
+
+type Status = "not-started" | "in-progress" | "finished";
 
 interface Task {
+  id: string;
   title: string;
   description: string;
-  status: "todo" | "in-progress" | "done";
+  status: Status;
 }
 
-export default function Home() {
+const statuses: { label: string; value: Status }[] = [
+  { label: "Not Started", value: "not-started" },
+  { label: "In Progress", value: "in-progress" },
+  { label: "Finished", value: "finished" },
+];
+
+export default function Kanban() {
   const [tasks, setTasks] = useState<Task[]>([]);
   const [title, setTitle] = useState("");
   const [description, setDescription] = useState("");
-  const [status, setStatus] = useState<Task["status"]>("todo");
 
   const addTask = () => {
     if (!title.trim()) return;
-    setTasks([...tasks, { title, description, status }]);
+    setTasks([
+      ...tasks,
+      { id: uuidv4(), title, description, status: "not-started" },
+    ]);
     setTitle("");
     setDescription("");
-    setStatus("todo");
+  };
+
+  const handleDragEnd = (event: any) => {
+    const { over, active } = event;
+    if (over) {
+      setTasks((prev) =>
+          prev.map((task) =>
+              task.id === active.id ? { ...task, status: over.id } : task
+          )
+      );
+    }
   };
 
   return (
-      <main className="p-6 max-w-2xl mx-auto space-y-6">
-        <Card>
-          <CardContent className="space-y-4 pt-6">
-            <Input
-                placeholder="Title"
-                value={title}
-                onChange={(e) => setTitle(e.target.value)}
-            />
-            <Textarea
-                placeholder="Description"
-                value={description}
-                onChange={(e) => setDescription(e.target.value)}
-            />
-            <Select value={status} onValueChange={(v) => setStatus(v as Task["status"])}>
-              <SelectTrigger>
-                <SelectValue placeholder="Select status" />
-              </SelectTrigger>
-              <SelectContent>
-                <SelectItem value="todo">To Do</SelectItem>
-                <SelectItem value="in-progress">In Progress</SelectItem>
-                <SelectItem value="done">Done</SelectItem>
-              </SelectContent>
-            </Select>
-            <Button onClick={addTask}>Add Task</Button>
-          </CardContent>
-        </Card>
-
-        <div className="space-y-4">
-          {tasks.map((task, idx) => (
-              <Card key={idx} className="border-l-4" style={{ borderColor: getStatusColor(task.status) }}>
-                <CardContent className="pt-4">
-                  <h2 className="text-lg font-semibold">{task.title}</h2>
-                  <p className="text-sm text-gray-600">{task.description}</p>
-                  <p className="text-xs mt-1 text-gray-400 uppercase">{task.status}</p>
-                </CardContent>
-              </Card>
-          ))}
+      <main className="p-6 space-y-6">
+        <div className="max-w-xl space-y-4">
+          <Input
+              placeholder="Task title"
+              value={title}
+              onChange={(e) => setTitle(e.target.value)}
+          />
+          <Textarea
+              placeholder="Description"
+              value={description}
+              onChange={(e) => setDescription(e.target.value)}
+          />
+          <Button onClick={addTask}>Add Task</Button>
         </div>
+
+        <DndContext onDragEnd={handleDragEnd} collisionDetection={closestCenter}>
+          <div className="grid grid-cols-1 sm:grid-cols-3 gap-4">
+            {statuses.map((col) => (
+                <Column
+                    key={col.value}
+                    id={col.value}
+                    title={col.label}
+                    tasks={tasks.filter((t) => t.status === col.value)}
+                />
+            ))}
+          </div>
+        </DndContext>
       </main>
   );
 }
 
-function getStatusColor(status: Task["status"]): string {
-  switch (status) {
-    case "todo":
-      return "#fbbf24"; // amber
-    case "in-progress":
-      return "#3b82f6"; // blue
-    case "done":
-      return "#10b981"; // green
-    default:
-      return "#d1d5db"; // gray
-  }
+function Column({
+                  id,
+                  title,
+                  tasks,
+                }: {
+  id: Status;
+  title: string;
+  tasks: Task[];
+}) {
+  const { setNodeRef } = useDroppable({ id });
+
+  return (
+      <div ref={setNodeRef} className="bg-gray-100 rounded-xl p-4 min-h-[300px]">
+        <h2 className="text-lg font-bold mb-4">{title}</h2>
+        <div className="space-y-4">
+          {tasks.map((task) => (
+              <TaskCard key={task.id} task={task} />
+          ))}
+        </div>
+      </div>
+  );
+}
+
+function TaskCard({ task }: { task: Task }) {
+  const { attributes, listeners, setNodeRef, transform } = useDraggable({
+    id: task.id,
+  });
+
+  const style = transform
+      ? {
+        transform: `translate(${transform.x}px, ${transform.y}px)`,
+      }
+      : undefined;
+
+  return (
+      <Card ref={setNodeRef} style={style} {...listeners} {...attributes}>
+        <CardContent className="pt-4 space-y-1 cursor-grab">
+          <h3 className="font-medium">{task.title}</h3>
+          <p className="text-sm text-gray-600">{task.description}</p>
+        </CardContent>
+      </Card>
+  );
 }
