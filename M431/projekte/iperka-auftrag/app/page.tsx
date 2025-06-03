@@ -1,12 +1,13 @@
 "use client";
 
-import {useEffect, useState} from "react";
-import {DndContext, closestCenter} from "@dnd-kit/core";
-import {Column} from "@/components/Column";
-import {Input} from "@/components/ui/input";
-import {Textarea} from "@/components/ui/textarea";
-import {Button} from "@/components/ui/button";
-import {v4 as uuidv4} from "uuid";
+import { useEffect, useState } from "react";
+import { DndContext, closestCenter } from "@dnd-kit/core";
+import { Column } from "@/components/Column";
+import { Input } from "@/components/ui/input";
+import { Textarea } from "@/components/ui/textarea";
+import { Button } from "@/components/ui/button";
+import { v4 as uuidv4 } from "uuid";
+import RepeatSelector, { Repeat } from "@/components/RepeatSelector";
 
 type Status = "not-started" | "in-progress" | "finished";
 
@@ -15,19 +16,21 @@ interface Task {
     title: string;
     description: string;
     status: Status;
+    repeat: Repeat;
 }
 
 const statuses: { label: string; value: Status }[] = [
-    {label: "Not Started", value: "not-started"},
-    {label: "In Progress", value: "in-progress"},
-    {label: "Finished", value: "finished"},
+    { label: "Not Started", value: "not-started" },
+    { label: "In Progress", value: "in-progress" },
+    { label: "Finished", value: "finished" },
 ];
 
-export default function Kanban() {
+export default function KanbanPage() {
     const [isHydrated, setIsHydrated] = useState(false);
     const [tasks, setTasks] = useState<Task[]>([]);
     const [title, setTitle] = useState("");
     const [description, setDescription] = useState("");
+    const [repeat, setRepeat] = useState<Repeat>("none");
 
     useEffect(() => {
         setIsHydrated(true);
@@ -35,23 +38,32 @@ export default function Kanban() {
 
     const addTask = () => {
         if (!title.trim()) return;
-        setTasks([
-            ...tasks,
-            {id: uuidv4(), title, description, status: "not-started"},
-        ]);
+
+        const newTask: Task = {
+            id: uuidv4(),
+            title,
+            description,
+            status: "not-started",
+            repeat,
+        };
+
+        setTasks([...tasks, newTask]);
+
+        // Clear form
         setTitle("");
         setDescription("");
+        setRepeat("none");
     };
 
     const handleDragEnd = (event: any) => {
-        const {over, active} = event;
-        if (over) {
-            setTasks((prev) =>
-                prev.map((task) =>
-                    task.id === active.id ? {...task, status: over.id} : task
-                )
-            );
-        }
+        const { over, active } = event;
+        if (!over) return;
+
+        setTasks((prev) =>
+            prev.map((task) =>
+                task.id === active.id ? { ...task, status: over.id } : task
+            )
+        );
     };
 
     if (!isHydrated) return null;
@@ -69,6 +81,7 @@ export default function Kanban() {
                     value={description}
                     onChange={(e) => setDescription(e.target.value)}
                 />
+                <RepeatSelector value={repeat} onChange={setRepeat} />
                 <Button onClick={addTask}>Add Task</Button>
             </div>
 
