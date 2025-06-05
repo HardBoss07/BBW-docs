@@ -1,0 +1,68 @@
+erDiagram
+    Hafen {
+        int id PK
+        string name
+        int parent_id FK
+    }
+
+    Liegeplatz {
+        int id PK
+        int hafen_id FK
+    }
+
+    Boot {
+        int id PK
+        string name
+        string typ
+        int hafen_id FK
+    }
+
+    Motorboot {
+        int boot_id PK, FK
+        int ps
+    }
+
+    Segelboot {
+        int boot_id PK, FK
+        float segelflaeche
+    }
+
+    Person {
+        int id PK
+        string name
+    }
+
+    VonBis {
+        int boot_id FK
+        int liegeplatz_id FK
+        date von
+        date bis
+    }
+
+    Besitzt {
+        int person_id PK, FK
+        int boot_id FK
+    }
+
+    Repariert {
+        int person_id FK
+        int boot_id FK
+    }
+
+    %% Beziehungen
+    Hafen ||--o{ Liegeplatz : "beherbergt"
+    Hafen ||--o{ Boot : "hat"
+    Hafen ||--o| Hafen : "ist Teil von"
+
+    Liegeplatz }o--o{ Boot : "über VonBis"
+    VonBis }o--|| Boot : ""
+    VonBis }o--|| Liegeplatz : ""
+
+    Boot ||--|| Motorboot : "ist ein"
+    Boot ||--|| Segelboot : "ist ein"
+
+    Person ||--o{ Besitzt : "besitzt"
+    Besitzt }o--|| Boot : ""
+
+    Person }o--o{ Repariert : "repariert"
+    Repariert }o--|| Boot : ""
