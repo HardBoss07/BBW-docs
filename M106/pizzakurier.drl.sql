@@ -49,7 +49,7 @@ SELECT
   id,
   name,
   preis,
-  ROUND(preis * 0.08, 2) AS mwst
+  ROUND(ROUND(preis * 0.08 * 20, 0) / 20, 2) AS mwst
 FROM produkte;
 
 -- Anzahl Datensätze in Produkttabelle
