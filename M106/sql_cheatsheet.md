@@ -100,6 +100,38 @@ HAVING AVG(salary) > 60000;
 -- Departments with average salary above 60,000
 ```
 
+### JOIN and GROUP BY with HAVING
+
+#### Basic `JOIN` with `GROUP BY`
+
+```sql
+SELECT category.category, COUNT(product.id) AS product_count
+FROM product
+JOIN category ON product.fk_category_id = category.id
+GROUP BY category.id;
+```
+
+#### `GROUP BY` with `HAVING` clause (filter groups)
+
+```sql
+SELECT category.category, AVG(product.price) AS avg_price
+FROM product
+JOIN category ON product.fk_category_id = category.id
+GROUP BY category.id
+HAVING avg_price > 15;
+```
+
+#### Use `HAVING` when filtering aggregated results
+
+```sql
+-- Show customers with more than 3 orders
+SELECT customer.lastname, COUNT(order_entry.id) AS order_count
+FROM customer
+JOIN order_entry ON customer.id = order_entry.fk_customer_id
+GROUP BY customer.id
+HAVING order_count > 3;
+```
+
 ### SQL Functions
 ```sql
 SELECT NOW(); -- Returns the current date and time
@@ -199,16 +231,16 @@ SELECT * FROM employees WHERE hire_date IS NULL;
 
 This table summarizes how to create users with different levels of privileges in SQL (standard MySQL/MariaDB syntax, similar in PostgreSQL and others).
 
-| Purpose                         | SQL Command |
-|----------------------------------|-------------|
-| Create user with **no privileges** | ```CREATE USER 'user1'@'localhost' IDENTIFIED BY 'password';``` |
-| Grant **ALL privileges on all databases** | ```GRANT ALL PRIVILEGES ON *.* TO 'user1'@'localhost';``` |
-| Grant **ALL privileges on one database** | ```GRANT ALL PRIVILEGES ON database_name.* TO 'user1'@'localhost';``` |
-| Grant **ALL privileges on one table** | ```GRANT ALL PRIVILEGES ON database_name.table_name TO 'user1'@'localhost';``` |
-| Grant **specific privileges on a table** | ```GRANT SELECT, INSERT ON database_name.table_name TO 'user1'@'localhost';``` |
-| Grant with **GRANT OPTION** (allows the user to grant their privileges to others) | ```GRANT SELECT, INSERT ON database_name.table_name TO 'user1'@'localhost' WITH GRANT OPTION;``` |
-| Revoke all privileges | ```REVOKE ALL PRIVILEGES, GRANT OPTION FROM 'user1'@'localhost';``` |
-| Drop user | ```DROP USER 'user1'@'localhost';``` |
+| Purpose                                                  | SQL Command                                                                                 |
+|----------------------------------------------------------|---------------------------------------------------------------------------------------------|
+| Create user with **no privileges**                       | `CREATE USER 'user1'@'localhost' IDENTIFIED BY 'password';`                                 |
+| Grant **ALL privileges on all databases**                | `GRANT ALL PRIVILEGES ON *.* TO 'user1'@'localhost';`                                       |
+| Grant **ALL privileges on one database**                 | `GRANT ALL PRIVILEGES ON database_name.* TO 'user1'@'localhost';`                           |
+| Grant **ALL privileges on one table**                    | `GRANT ALL PRIVILEGES ON database_name.table_name TO 'user1'@'localhost';`                  |
+| Grant **specific privileges on a table**                 | `GRANT SELECT, INSERT ON database_name.table_name TO 'user1'@'localhost';`                  |
+| Grant with **GRANT OPTION** (grant privileges to others) |`GRANT SELECT, INSERT ON database_name.table_name TO 'user1'@'localhost' WITH GRANT OPTION;` |
+| Revoke all privileges                                    | `REVOKE ALL PRIVILEGES, GRANT OPTION FROM 'user1'@'localhost';`                             |
+| Drop user                                                | `DROP USER 'user1'@'localhost'`                                                             |
 
 ### Notes:
 - `'user1'@'localhost'` means the user can connect only from the local machine.
@@ -289,4 +321,55 @@ REVOKE ALL PRIVILEGES, GRANT OPTION FROM 'any_user'@'localhost';
 ```sql
 DROP USER 'obsolete_user'@'localhost';
 -- Deletes user from the database system
+```
+
+## SQL Dump Create / Load
+```bash
+C:/xampp/mysql/bin> mysqldump.exe -u root -p --databases pizzadb > pizzadb_dump.sql
+```
+
+### As CSV
+
+#### Export table to CSV (from MySQL):
+
+```sql
+SELECT * FROM table_name
+INTO OUTFILE '/path/to/output.csv'
+FIELDS TERMINATED BY ','
+ENCLOSED BY '"'
+LINES TERMINATED BY '\n';
+```
+
+#### Import CSV into MySQL:
+
+```sql
+LOAD DATA INFILE '/path/to/input.csv'
+INTO TABLE table_name
+FIELDS TERMINATED BY ','
+ENCLOSED BY '"'
+LINES TERMINATED BY '\n'
+IGNORE 1 ROWS; -- (optional) Used for CSV files with column names as header
+```
+
+### As `;`-Separated (semicolon-separated)
+
+#### Export table as `;`-separated file:
+
+```sql
+SELECT * FROM table_name
+INTO OUTFILE '/path/to/output_semi.csv'
+FIELDS TERMINATED BY ';'
+ENCLOSED BY '"'
+LINES TERMINATED BY '\n';
+```
+
+#### Import `;`-separated file into MySQL:
+
+```sql
+LOAD DATA INFILE '/path/to/input_semi.csv'
+INTO TABLE table_name
+FIELDS TERMINATED BY ';'
+ENCLOSED BY '"'
+LINES TERMINATED BY '\n'
+IGNORE 1 ROWS; -- (optional) Used for CSV files with column names as header
 ```
