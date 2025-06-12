@@ -1,0 +1,12 @@
+-- Erstellen Sie einen SQL-Dump ihrer Sakila Datenbank.
+C:\> cd temp
+C:\temp> mysqldump -u root -p sakila > sakila.sql
+
+-- Laden Sie den SQL-Dump in eine neue Datenbank namens sakila_copy.
+mysql> create database sakila_copy;
+mysql> exit
+
+C:\temp> mysql -u root -p sakila_copy < sakila.sql
+
+-- Erstellen Sie einen SQL-Dump aller Datenbanken auf Ihrem Server als Backup.
+C:\temp> mysqldump -u root -p --all-databases > all-databases.sql
