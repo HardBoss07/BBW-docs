@@ -242,6 +242,26 @@ This table summarizes how to create users with different levels of privileges in
 | Revoke all privileges                                    | `REVOKE ALL PRIVILEGES, GRANT OPTION FROM 'user1'@'localhost';`                             |
 | Drop user                                                | `DROP USER 'user1'@'localhost'`                                                             |
 
+### All possible privileges
+| Privilege                  | Description                                  |
+| -------------------------- | -------------------------------------------- |
+| `ALL PRIVILEGES`           | All privileges below                         |
+| `SELECT`                   | Read data from tables                        |
+| `INSERT`                   | Add new rows to tables                       |
+| `UPDATE`                   | Modify existing data                         |
+| `DELETE`                   | Remove rows from tables                      |
+| `CREATE`                   | Create new tables or databases               |
+| `DROP`                     | Delete tables or databases                   |
+| `INDEX`                    | Create or drop indexes                       |
+| `ALTER`                    | Modify table structure                       |
+| `GRANT OPTION`             | Allow the user to grant privileges to others |
+| `REFERENCES`               | Define foreign keys                          |
+| `CREATE TEMPORARY TABLES`  | Create temp tables used during a session     |
+| `LOCK TABLES`              | Lock tables for writing                      |
+| `EXECUTE`                  | Execute stored procedures/functions          |
+| `CREATE VIEW`, `SHOW VIEW` | Work with views                              |
+| `EVENT`, `TRIGGER`         | Manage events and triggers                   |
+
 ### Notes:
 - `'user1'@'localhost'` means the user can connect only from the local machine.
 - Use `'%'` instead of `'localhost'` to allow connections from any host.
