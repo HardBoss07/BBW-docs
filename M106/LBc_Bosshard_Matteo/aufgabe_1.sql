@@ -1,0 +1,3 @@
+DROP DATABASE IF EXISTS aufgabe1;
+CREATE DATABASE aufgabe1;
+USE aufgabe1;
