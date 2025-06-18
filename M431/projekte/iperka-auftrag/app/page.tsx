@@ -8,7 +8,7 @@ import {Textarea} from "@/components/ui/textarea";
 import {Button} from "@/components/ui/button";
 import {v4 as uuidv4} from "uuid";
 import RepeatSelector, {Repeat} from "@/components/RepeatSelector";
-import WeatherForecast from "@/components/WeatherForecast"; // import your weather component
+import WeatherForecast from "@/components/WeatherForecast";
 
 type Status = "not-started" | "in-progress" | "finished";
 
@@ -26,6 +26,8 @@ const statuses: { label: string; value: Status }[] = [
     {label: "Finished", value: "finished"},
 ];
 
+const LOCAL_STORAGE_KEY = "kanban-tasks";
+
 export default function KanbanPage() {
     const [isHydrated, setIsHydrated] = useState(false);
     const [tasks, setTasks] = useState<Task[]>([]);
@@ -33,9 +35,30 @@ export default function KanbanPage() {
     const [description, setDescription] = useState("");
     const [repeat, setRepeat] = useState<Repeat>("none");
 
+    // Hydration check
     useEffect(() => {
         setIsHydrated(true);
     }, []);
+
+    // Load tasks from localStorage on mount
+    useEffect(() => {
+        const storedTasks = localStorage.getItem(LOCAL_STORAGE_KEY);
+        if (storedTasks) {
+            try {
+                const parsedTasks = JSON.parse(storedTasks) as Task[];
+                setTasks(parsedTasks);
+            } catch (error) {
+                console.error("Failed to parse tasks from localStorage:", error);
+            }
+        }
+    }, []);
+
+    // Save tasks to localStorage whenever they change
+    useEffect(() => {
+        if (isHydrated) {
+            localStorage.setItem(LOCAL_STORAGE_KEY, JSON.stringify(tasks));
+        }
+    }, [tasks, isHydrated]);
 
     const addTask = () => {
         if (!title.trim()) return;
@@ -48,7 +71,7 @@ export default function KanbanPage() {
             repeat,
         };
 
-        setTasks([...tasks, newTask]);
+        setTasks((prev) => [...prev, newTask]);
 
         // Clear form
         setTitle("");
@@ -75,7 +98,6 @@ export default function KanbanPage() {
 
                 {/* Top Row: Form + Forecast */}
                 <div className="flex flex-col lg:flex-row gap-6">
-                    {/* Task form */}
                     <div className="flex-1 space-y-4">
                         <Input
                             placeholder="Task title"
@@ -90,8 +112,6 @@ export default function KanbanPage() {
                         <RepeatSelector value={repeat} onChange={setRepeat}/>
                         <Button onClick={addTask}>Add Task</Button>
                     </div>
-
-                    {/* Weather Forecast */}
                     <div className="w-full lg:w-96">
                         <WeatherForecast/>
                     </div>

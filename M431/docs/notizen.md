@@ -12,3 +12,4 @@
 - [Lektion von 14-05-2025](/docs/14-05-2025/page.md)
 - [Lektion von 21-05-2025](/docs/21-05-2025/page.md)
 - [Lektion von 04-06-2025](/docs/04-06-2025/page.md)
+- [Lektion von 18-06-2025](/docs/18-06-2025/page.md)
