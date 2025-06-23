@@ -23,4 +23,3 @@ Vorhaben umsetzen, wirkliche Arbeit, Ziel-Ausrichtung überprüfen, Probleme beh
 Habe ich meine Ziele erreicht? Meilensteine überprüfen, Vergleich von Planung und Umsetzung, Checkliste, eigene Fremdkontrolle, Qualitätskontrolle, Abnahmekriterien überprüfen, Können die Ziele und Teilziele erreicht werden? Stimmt die Qualität des Produktes, bewährt sich das Produkt in Tests? Sind alle Teile der Abmachungen berücksichtigt? Werden Missstände offen kommuniziert? Ist das Produkt aktuell, sind allfällige Änderungen berücksichtigt?
 ## Auswertung
 Was war ein Erfolg? Reflexion über das Produkt, Reflexion über die Zusammenarbeit, Optimierungen formulieren, ERkenntnisse zusammenfassen, Sind alle Ziele erreicht worden? Wo gibt es Verbesserungsideen zum Produkt, zum Prozess, zur Zusammenarbeit zum Umgang im Team? Was machen wir das nächste Mal besser / anders?
-
