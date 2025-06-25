@@ -1,0 +1,103 @@
+/* Library CSS Stylesheet
+ * This stylesheet is used to style the book library page.
+ * It includes styles for the header, book list, and individual book cards.
+ * It uses Flexbox for layout and is responsive to different screen sizes.
+ * Mobile-first design approach is used, with styles for larger screens
+ * added via media queries.
+ */
+
+/* reset/overwrite some styling */
+* {
+  box-sizing: border-box;
+  margin: 0;
+  padding: 0;
+}
+
+/* Apply smaller scale for mobile */
+body {
+  font-size: 0.875rem; /* ~14px */
+}
+
+/* header styling */
+.header {
+  padding: 0.5rem;
+}
+
+/* header h1 */
+.header h1 {
+  text-align: center;
+  font-size: 1.25rem; /* smaller heading */
+}
+
+/* book-list container: flexbox as column */
+.book-list {
+  display: flex;
+  flex-direction: column;
+  gap: 0.5rem;
+  padding: 0.5rem;
+}
+
+/* book-card (content of a card) as column */
+.book-card {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  width: 100%;
+  border: 1px solid #ccc;
+  border-radius: 8px;
+  overflow: hidden;
+}
+
+/* book-card image */
+.book-card img {
+  width: 100%;
+  height: auto;
+  max-width: 100%; /* limit size on mobile */
+  object-fit: cover;
+}
+
+/* book-card info (text) */
+.book-card .info {
+  padding: 0.25rem;
+  font-size: 0.875rem; /* smaller text */
+}
+
+/* media query for larger screens */
+@media (min-width: 600px) {
+  body {
+    font-size: 1rem; /* default font size ~16px */
+  }
+
+  .header {
+    padding: 1rem;
+  }
+
+  .header h1 {
+    text-align: left;
+    font-size: 2rem;
+  }
+
+  .book-list {
+    flex-direction: row;
+    flex-wrap: wrap;
+    gap: 1rem;
+    padding: 1rem;
+  }
+
+  .book-card {
+    width: calc((100% - 2rem) / 3);
+    min-width: 300px;
+  }
+
+  .book-card img {
+    width: 100%;
+    height: auto;
+    max-height: none;
+    object-fit: cover;
+  }
+
+  .book-card .info {
+    padding: 0.5rem;
+    font-size: 1rem;
+  }
+}
