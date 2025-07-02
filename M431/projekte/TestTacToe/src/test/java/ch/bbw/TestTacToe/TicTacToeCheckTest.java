@@ -3,8 +3,7 @@ package ch.bbw.TestTacToe;
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
 
-import static org.junit.jupiter.api.Assertions.assertFalse;
-import static org.junit.jupiter.api.Assertions.assertTrue;
+import static org.junit.jupiter.api.Assertions.*;
 
 class TicTacToeCheckTest {
 
@@ -34,5 +33,19 @@ class TicTacToeCheckTest {
     void oHasNoCol() {
         TicTacToeCheck ticTacToeCheck = new TicTacToeCheck();
         assertFalse(ticTacToeCheck.checkColumns(new char[][]{{'x', 'o', 'o'}, {'x', ' ', ' '}, {'x', 'o', 'x'}}, 'o'));
+    }
+
+    @Test
+    @DisplayName("x has a diagonal win")
+    void xHasWinningDiagonal() {
+        TicTacToeCheck ticTacToeCheck = new TicTacToeCheck();
+
+        char[][] board = {
+                {'x', 'o', 'o'},
+                {' ', 'x', ' '},
+                {' ', ' ', 'x'}
+        };
+
+        assertEquals('x', ticTacToeCheck.whoWon(board));
     }
 }
