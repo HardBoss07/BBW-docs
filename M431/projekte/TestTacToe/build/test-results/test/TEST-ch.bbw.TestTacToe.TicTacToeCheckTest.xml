@@ -1,0 +1,10 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<testsuite name="ch.bbw.TestTacToe.TicTacToeCheckTest" tests="4" skipped="0" failures="0" errors="0" timestamp="2025-07-02T05:56:07.126Z" hostname="MATTEO-LENOVO" time="0.032">
+  <properties/>
+  <testcase name="x has first column" classname="ch.bbw.TestTacToe.TicTacToeCheckTest" time="0.024"/>
+  <testcase name="x has first row" classname="ch.bbw.TestTacToe.TicTacToeCheckTest" time="0.0"/>
+  <testcase name="o doesn't have columns" classname="ch.bbw.TestTacToe.TicTacToeCheckTest" time="0.002"/>
+  <testcase name="o doesn't have rows" classname="ch.bbw.TestTacToe.TicTacToeCheckTest" time="0.001"/>
+  <system-out><![CDATA[]]></system-out>
+  <system-err><![CDATA[]]></system-err>
+</testsuite>
