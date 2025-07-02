@@ -3,6 +3,7 @@ import './css/library.css';
 import {books} from './components/Books.jsx';
 import BookCard from './components/BookCard.jsx';
 import SearchBar from './components/SearchBar.jsx';
+import NavBar from "./components/NavBar.jsx";
 
 function App() {
     const [search, setSearch] = useState("");
@@ -14,6 +15,7 @@ function App() {
 
     return (
         <>
+            <NavBar/>
             <header className="header">
                 <h1>Meine Bibliothek</h1>
             </header>
