@@ -1,43 +1,50 @@
-/* Library CSS Stylesheet
- * This stylesheet is used to style the book library page.
- * It includes styles for the header, book list, and individual book cards.
- * It uses Flexbox for layout and is responsive to different screen sizes.
- * Mobile-first design approach is used, with styles for larger screens
- * added via media queries.
- */
-
-/* reset/overwrite some styling */
+/* Reset */
 * {
-  box-sizing: border-box;
   margin: 0;
   padding: 0;
+  box-sizing: border-box;
 }
 
-/* Apply smaller scale for mobile */
+/* Base layout */
 body {
-  font-size: 0.875rem; /* ~14px */
-}
-
-/* header styling */
-.header {
-  padding: 0.5rem;
-}
-
-/* header h1 */
-.header h1 {
-  text-align: center;
-  font-size: 1.25rem; /* smaller heading */
-}
-
-/* book-list container: flexbox as column */
-.book-list {
+  font-family: sans-serif;
+  height: 100vh;
   display: flex;
   flex-direction: column;
-  gap: 0.5rem;
-  padding: 0.5rem;
+  font-size: 0.875rem;
 }
 
-/* book-card (content of a card) as column */
+/* Header */
+.header {
+  padding: 1rem;
+}
+
+.header h1 {
+  text-align: center;
+  font-size: 1.25rem;
+}
+
+/* Main layout container */
+.main-content {
+  display: flex;
+  flex-direction: column;
+  flex: 1;
+}
+
+/* Sidebar layout for search */
+.side-menu {
+  padding: 1rem;
+}
+
+/* Main book area */
+.items {
+  padding: 1rem;
+  display: flex;
+  flex-direction: column;
+  gap: 1rem;
+}
+
+/* Book card layout */
 .book-card {
   display: flex;
   flex-direction: column;
@@ -48,28 +55,21 @@ body {
   overflow: hidden;
 }
 
-/* book-card image */
 .book-card img {
   width: 100%;
   height: auto;
-  max-width: 100%; /* limit size on mobile */
   object-fit: cover;
 }
 
-/* book-card info (text) */
 .book-card .info {
-  padding: 0.25rem;
-  font-size: 0.875rem; /* smaller text */
+  padding: 0.5rem;
+  font-size: 0.875rem;
 }
 
-/* media query for larger screens */
+/* Responsive: desktop layout */
 @media (min-width: 600px) {
   body {
-    font-size: 1rem; /* default font size ~16px */
-  }
-
-  .header {
-    padding: 1rem;
+    font-size: 1rem;
   }
 
   .header h1 {
@@ -77,27 +77,46 @@ body {
     font-size: 2rem;
   }
 
-  .book-list {
+  .main-content {
     flex-direction: row;
+  }
+
+  .side-menu {
+    width: 200px;
+    flex-shrink: 0;
+  }
+
+  .items {
+    flex: 1;
     flex-wrap: wrap;
+    flex-direction: row;
     gap: 1rem;
-    padding: 1rem;
   }
 
   .book-card {
     width: calc((100% - 2rem) / 3);
-    min-width: 300px;
-  }
-
-  .book-card img {
-    width: 100%;
-    height: auto;
-    max-height: none;
-    object-fit: cover;
+    min-width: 200px;
   }
 
   .book-card .info {
-    padding: 0.5rem;
     font-size: 1rem;
+  }
+}
+
+/* Print: hide sidebar */
+@media print {
+  .side-menu,
+  .search-bar {
+    display: none !important;
+  }
+
+  .header h1 {
+    font-size: 16pt;
+    text-align: left;
+  }
+
+  .book-card img {
+    width: 100px;
+    height: auto;
   }
 }

@@ -14,3 +14,4 @@
 - [Lektion von 04-06-2025](/docs/04-06-2025/page.md)
 - [Lektion von 18-06-2025](/docs/18-06-2025/page.md)
 - [Lektion von 25-06-2025](/docs/25-06-2025/page.md)
+- [Lektion von 02-07-2025](/docs/02-07-2025/page.md)
